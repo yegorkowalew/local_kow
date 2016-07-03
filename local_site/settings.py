@@ -57,7 +57,7 @@ ROOT_URLCONF = 'local_site.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/home/yegor/local_kow/templates',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
