@@ -29,8 +29,9 @@ def register_user(request):
     else:
         form = RegisterUserForm()
 
-    return render(request, 'userprofile/register_user.html', {'form': form})
-
+#    return render(request, 'userprofile/register_user.html', {'form': form})
+    return render(request, 'template-body.html', {'form': form})
+    
 def pr(request):
     m_user = User.objects.get(username='0041703721')
     try:
