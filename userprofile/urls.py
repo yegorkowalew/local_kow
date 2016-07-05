@@ -3,6 +3,7 @@ from . import views
 
 urlpatterns = [
     url(r'^register/', views.register_user, name='register_user'),
+    url(r'^pr/', views.pr, name='profile'),
 ]
 
 

@@ -4,6 +4,7 @@ import requests
 import lxml.html
 
 from django.contrib.auth.models import User
+from userprofile.models import UserProfile
 
 class RegisterUserForm(forms.Form):
     user_login = forms.CharField(label='Login', max_length=20)
@@ -25,12 +26,14 @@ class RegisterUserForm(forms.Form):
         try:
             p = User.objects.get(username=user_login)
         except User.DoesNotExist:
-            print ('Пользователь уже есть в базе, нужно попытаться завести нового')
-#            forms.ValidationError('Пользователь уже есть в базе, нужно попытаться завести нового')
+            print ('нужно попытаться завести нового')
+            #forms.ValidationError('Пользователь уже есть в базе, нужно попытаться завести нового')
             r = requests.post('http://www.wimagic.com.ua/1.php', data = {'login':user_login, 'pass':user_pass})
             html = lxml.html.fromstring(r.text)
             try:
                 rr = html.xpath("/html/body/pre/text()")[0]
+                
+                raise forms.ValidationError('Сайт провайдера ответил: "' + rr.encode('raw-unicode-escape').decode('utf-8') + '". Вы ввели не правильный номер личного счета, либо не правильный пароль.')
             except IndexError:
                 print ('Логин правильный')
                 try:
@@ -45,12 +48,21 @@ class RegisterUserForm(forms.Form):
                     # Регистрируем пользователя в системе
                     user = User.objects.create_user(
                                     username = user_login, 
-                                    email = 'lennon@thebeatles.com', 
+                                    #email = 'lennon@thebeatles.com', 
                                     password = user_pass,
                                     first_name = fio[1],
-                                    last_name = fio[0]
+                                    last_name = fio[0],
                                     )
                     user.save()
+                    try:
+                        pr = UserProfile.objects.get(m_user.id)
+                    except:
+                        print('нету')
+                        user = UserProfile.objects.create(
+                                            user_id = user.id,
+                                            middle_name = fio[0],
+                                            pwd = user_pass
+                        )
                     
                 except IndexError:
                     print ('Не правильный номер личного счета или пароль')
@@ -59,4 +71,5 @@ class RegisterUserForm(forms.Form):
         else:
             print ('Пользователь уже есть в базе, нужно попытаться авторизировать его')
             raise forms.ValidationError('Пользователь уже есть в базе, нужно попытаться авторизировать его')
+    
 
