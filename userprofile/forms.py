@@ -7,22 +7,29 @@ from django.contrib.auth.models import User
 from userprofile.models import UserProfile
 
 class RegisterUserForm(forms.Form):
-    user_login = forms.CharField(label='Login', max_length=20)
-    user_pass = forms.CharField(label='Password')
+    user_login = forms.CharField(
+        label='Номер вашего личного счета на сайте wimagic.com.ua', 
+        max_length=20, 
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'type':'text', 
+            'placeholder':'Например: 0041703345'}
+            )
+    )
+    user_pass = forms.CharField(
+        label='Пароль для входа в личный кабинет',
+        max_length=20,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'type':'password', 
+            'placeholder':'Пароль'}
+            )
+    )
     
     def clean(self):
         cleaned_data = super(RegisterUserForm, self).clean()
         user_login = cleaned_data.get("user_login")
         user_pass = cleaned_data.get("user_pass")
-        
-        
-        # r = requests.post('http://www.wimagic.com.ua/1.php', data = {'login':user_login, 'pass':user_pass})
-        # html = lxml.html.fromstring(r.text)
-        # rr = html.xpath("/html/body/pre/text()")[0]
-        # resp = rr.encode('raw-unicode-escape').decode('utf-8')
-        
-#        User.objects.get(username=user_login)
-        
         try:
             p = User.objects.get(username=user_login)
         except User.DoesNotExist:
@@ -60,7 +67,7 @@ class RegisterUserForm(forms.Form):
                         print('нету')
                         user = UserProfile.objects.create(
                                             user_id = user.id,
-                                            middle_name = fio[0],
+                                            middle_name = fio[2],
                                             pwd = user_pass
                         )
                     

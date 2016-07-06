@@ -21,17 +21,18 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="icon-toggle"></span>
       </button>
-      <a class="navbar-brand" href="#">Wimagic-Alert</a>
+      <a class="navbar-brand" href="/">Wimagic-Alert</a>
     </div>
+{% if user.is_authenticated %}
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        
         <li>
-          <a role="button" href="#">
-            <i class="glyphicon glyphicon-user"></i> Гость <span class=""></span></a>
+          <a role="button" href="/user/{{ user.username }}">
+            <i class="glyphicon glyphicon-user"></i> {{ user.first_name }} <span class=""></span></a>
         </li>
       </ul>
     </div>
+{% endif %}
   </div><!-- /container -->
 </div>
 <!-- /Header -->
@@ -62,15 +63,16 @@
     <div class="col-sm-9">
       	
       <!-- column 2 -->	
-       <h3><i class="glyphicon glyphicon-dashboard"></i> Главная</h3>  
+       {% block header %} {% endblock %}
             
        <hr>
       
 	   <div class="row">
             <!-- center left-->	
-
-         
-            <!--center-right-->
+            {% block content %}
+            {% endblock %}
+            
+           <!--center-right-->
 
      
        </div><!--/row-->

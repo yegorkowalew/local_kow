@@ -1,0 +1,37 @@
+{% extends 'template-body.html' %}
+
+{% block header %} 
+<h3><i class="glyphicon glyphicon-user"></i> {{ m_user.last_name }} {{ m_user.first_name }} {{ pr_user.middle_name }}</h3>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+<div class="col-md-4">
+    <div class="well">На счету:<span class="badge pull-right">100 грн.</span></div>
+</div>
+<div class="col-md-4">
+    <div class="well">Тариф:<span class="badge pull-right">200 грн./мес.</span></div>
+</div>
+<div class="col-md-4">
+    <div class="well">Л/С:<span class="badge pull-right">{{ m_user.username }}</span></div>
+</div>
+
+<div class="col-md-6">
+    <div class="well">E-mail:<span class="badge pull-right">kowalew.backup@gmail.com</span></div>
+</div>
+
+<div class="col-md-6">
+    <div class="well">VK:<span class="badge pull-right">yegorkowalew</span></div>
+</div>
+
+<div class="col-md-6">
+    <div class="well">OK:<span class="badge pull-right">184726387183</span></div>
+</div>
+</div>
+<hr>
+
+
+
+{% endblock content %}
+
+
