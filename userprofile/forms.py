@@ -43,8 +43,10 @@ class RegisterUserForm(forms.Form):
             html = lxml.html.fromstring(r.text)
             try:
                 rr = html.xpath("/html/body/pre/text()")[0]
-                
-                raise forms.ValidationError('Сайт провайдера ответил: "' + rr.encode('raw-unicode-escape').decode('utf-8') + '". Вы ввели не правильный номер личного счета, либо не правильный пароль.')
+                raise forms.ValidationError('Сайт провайдера ответил: "' + 
+                            rr.encode('raw-unicode-escape').decode('utf-8') + 
+                            '". Вы ввели не правильный номер личного счета, либо не правильный пароль.'
+                            )
             except IndexError:
                 print ('Логин правильный')
                 try:
@@ -89,3 +91,55 @@ class RegisterUserForm(forms.Form):
             raise forms.ValidationError('Пользователь уже есть в базе, нужно попытаться авторизировать его')
     
 
+class PreferencesUserForm(forms.Form):
+    user_tarif = forms.DecimalField(
+        max_value = 500,
+        min_value = 50,
+        max_digits = 5,
+        label='Ваш тариф на сайте wimagic.com.ua', 
+        # max_length=20,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'type':'text', 
+            'placeholder':'В виде: 200'}
+            )
+    )
+    user_email = forms.EmailField(
+        label='Ваш e-mail', 
+        max_length=35,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'type':'text', 
+            'placeholder':'В виде: user@example.com'}
+            )
+    )
+    user_vk = forms.URLField(
+        label='Ваша страница на vk.com',
+        max_length=40,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'type':'text', 
+            'placeholder':'В виде: vk.com/9879879879 или vk.com/nick_name'}
+            )
+    )
+    user_ok = forms.URLField(
+        label='Ваша страница на ok.ru',
+        max_length=40,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'type':'text', 
+            'placeholder':'В виде: ok.ru/profile/184726387334'}
+            )
+    )
+
+    
+    def clean(self):
+        cleaned_data = super(PreferencesUserForm, self).clean()
+        user_tarif = cleaned_data.get("user_tarif")
+        user_email = cleaned_data.get("user_email")
+        user_vk = cleaned_data.get("user_vk")
+        user_ok = cleaned_data.get("user_ok")
