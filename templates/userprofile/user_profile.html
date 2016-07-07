@@ -5,12 +5,30 @@
 {% endblock %}
 
 {% block content %}
+{% load humanize %}
 <div class="row">
+
 <div class="col-md-4">
-    <div class="well">На счету:<span class="badge pull-right">100 грн.</span></div>
+    <div class="well">На счету:<span class="badge pull-right">{{ money_last.money|floatformat:2 }} грн.</span> </div>
 </div>
+
+{% if days_left %}
+<div class="col-md-8">
+    <div class="well">Денег хватит приблизительно на {{ days_left }} дня(ей)</div>
+</div>
+{% endif %}
+
+
 <div class="col-md-4">
-    <div class="well">Тариф:<span class="badge pull-right">200 грн./мес.</span></div>
+    <div class="well">Тариф:
+{% if tarif_last %}
+	<span class="badge pull-right">{{ tarif_last.money_for_mons|floatformat:2 }} грн./мес.</span></div>
+{% else %}
+	<span class="pull-right"><a href="preferences" target="ext"><i class="glyphicon glyphicon-cog"></i> Настроить</a></span></div>
+{% endif %}
+
+
+    
 </div>
 <div class="col-md-4">
     <div class="well">Л/С:<span class="badge pull-right">{{ m_user.username }}</span></div>
@@ -27,6 +45,13 @@
 <div class="col-md-6">
     <div class="well">OK:<span class="badge pull-right">184726387183</span></div>
 </div>
+
+
+<div class="col-md-6">
+    <div class="well">Последняя проверка:<span class="badge pull-right">{{ money_last.created_date|naturaltime }} </span> </div>
+</div>
+
+
 </div>
 <hr>
 

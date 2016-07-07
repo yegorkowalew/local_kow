@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 from django import forms
 
 import requests
@@ -5,6 +6,9 @@ import lxml.html
 
 from django.contrib.auth.models import User
 from userprofile.models import UserProfile
+from money.models import Post
+
+# from django.contrib.auth import authenticate, login
 
 class RegisterUserForm(forms.Form):
     user_login = forms.CharField(
@@ -44,12 +48,12 @@ class RegisterUserForm(forms.Form):
             except IndexError:
                 print ('Логин правильный')
                 try:
-                    rr = html.xpath("/html/body/table/tr[1]/td[4]/text()")[0] # на счету
-                    print (rr.encode('raw-unicode-escape').decode('utf-8'))
+                    money_r = html.xpath("/html/body/table/tr[1]/td[4]/text()")[0] # на счету
+                    # print (rr.encode('raw-unicode-escape').decode('utf-8'))
                     rr = html.xpath("/html/body/pre/h2/span[1]")[0]
-                    print (rr.text)
+                    # print (rr.text)
                     rr = html.xpath("/html/body/pre/h2/span[2]")[0] # на счету
-                    print (rr.text.encode('raw-unicode-escape').decode('utf-8'))
+                    # print (rr.text.encode('raw-unicode-escape').decode('utf-8'))
                     fio = rr.text.encode('raw-unicode-escape').decode('utf-8').split(' ')
                     
                     # Регистрируем пользователя в системе
@@ -61,16 +65,21 @@ class RegisterUserForm(forms.Form):
                                     last_name = fio[0],
                                     )
                     user.save()
+                    new = Post(money=money_r, user=user)
+                    new.save()
                     try:
                         pr = UserProfile.objects.get(m_user.id)
                     except:
-                        print('нету')
+                        # print('нету')
                         user = UserProfile.objects.create(
                                             user_id = user.id,
                                             middle_name = fio[2],
                                             pwd = user_pass
                         )
-                    
+
+                    # user = authenticate(username=user_login, password=user_pass)
+                    # login(request, user)
+
                 except IndexError:
                     print ('Не правильный номер личного счета или пароль')
                     raise forms.ValidationError('Не правильный номер личного счета или пароль')
