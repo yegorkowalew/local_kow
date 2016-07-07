@@ -27,9 +27,11 @@ def pr(request):
     # new.save()
     money_last = Post.objects.filter(user=m_user).order_by('created_date').last()
     tarif_last = Tarif.objects.filter(user=m_user).last()
-    print(tarif_last)
     if tarif_last:
-        days_left = round(money_last.money/(tarif_last.money_for_mons/30))
+        from number_to_text import num2text
+        male_units = ((u'день', u'дня', u'дней'), 'm')
+        days_left = num2text(round(money_last.money/(tarif_last.money_for_mons/30)), male_units)
+    
     return render(request, 'userprofile/user_profile.html', {
                                                         'm_user': m_user,
                                                         'pr_user': pr_user,
