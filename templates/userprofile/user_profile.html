@@ -34,18 +34,23 @@
     <div class="well">Л/С:<span class="badge pull-right">{{ m_user.username }}</span></div>
 </div>
 
+{% if m_user.email %}
 <div class="col-md-6">
-    <div class="well">E-mail:<span class="badge pull-right">kowalew.backup@gmail.com</span></div>
+    <div class="well">E-mail:<span class="badge pull-right">{{ m_user.email }}</span></div>
 </div>
+{% endif %}
 
+{% if pr_user.vk_link %}
 <div class="col-md-6">
-    <div class="well">VK:<span class="badge pull-right">yegorkowalew</span></div>
+    <div class="well">VK:<span class="badge pull-right">{{ pr_user.vk_link }}</span></div>
 </div>
+{% endif %}
 
+{% if pr_user.ok_link %}
 <div class="col-md-6">
-    <div class="well">OK:<span class="badge pull-right">184726387183</span></div>
+    <div class="well">OK:<span class="badge pull-right">{{ pr_user.ok_link }}</span></div>
 </div>
-
+{% endif %}
 
 <div class="col-md-6">
     <div class="well">Последняя проверка:<span class="badge pull-right">{{ money_last.created_date|naturaltime }} </span> </div>

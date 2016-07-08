@@ -143,3 +143,39 @@ class PreferencesUserForm(forms.Form):
         user_email = cleaned_data.get("user_email")
         user_vk = cleaned_data.get("user_vk")
         user_ok = cleaned_data.get("user_ok")
+
+from django.contrib.auth import authenticate, login
+class LoginUserForm(forms.Form):
+    user_name = forms.CharField(
+        label='Логин', 
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'type':'text', 
+            'placeholder':'Например: 0041703345'}
+            )
+    )
+    user_pass = forms.CharField(
+        label='Пароль', 
+        max_length=35,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control', 
+            'type':'password', 
+            'placeholder':'Пароль'}
+            )
+    )
+
+    def clean(self):
+        cleaned_data = super(LoginUserForm, self).clean()
+        user_name = cleaned_data.get("user_name")
+        user_pass = cleaned_data.get("user_pass")
+        user = authenticate(username=user_name,
+                            password=user_pass,
+                            )
+        print(user_name)
+        print(user_pass)
+
+        if user is None:
+            raise forms.ValidationError('Не правильный логин или пароль')
+

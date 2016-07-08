@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
-from .forms import RegisterUserForm, PreferencesUserForm
+from .forms import RegisterUserForm, PreferencesUserForm, LoginUserForm
 from django.contrib.auth.models import User
 from userprofile.models import UserProfile
 from money.models import Post, Tarif
 
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 def register_user(request):
     if request.method == 'POST':
@@ -47,7 +48,8 @@ def pr(request):
                                                         'tarif_last':tarif_last,
                                                         'days_left':days_left,
                                                         })
-    
+
+@login_required(login_url='/user/login/')
 def user_detail(request, pk):
     m_user = get_object_or_404(User, username=pk)
     pr_user = UserProfile.objects.get(user_id=m_user.id)
@@ -69,19 +71,7 @@ def user_detail(request, pk):
                                                         'days_left':days_left,
                                                         })
 
-from django.forms.utils import ErrorList
-
-class ParagraphErrorList(ErrorList):
-    def __unicode__(self):
-        return self.as_paragraphs()
-
-    def as_paragraphs(self):
-        return "<p >%s</p>" % (
-            ",".join(e for e in self.errors)
-        )
-
-
-
+@login_required(login_url='/user/login/')
 def user_preferences(request, pk):
     m_user = get_object_or_404(User, username=pk)
     pr_user = UserProfile.objects.get(user_id=m_user.id)
@@ -124,7 +114,7 @@ def user_preferences(request, pk):
 
             return HttpResponseRedirect('/user/'+request.user.username)
     else:
-        form = PreferencesUserForm(data, initial=data, error_class=ParagraphErrorList)
+        form = PreferencesUserForm(data, initial=data)
 
 
     return render(request, 'userprofile/preferences_user.html', {
@@ -135,3 +125,30 @@ def user_preferences(request, pk):
                                                         'days_left':days_left,
                                                         'form': form,
                                                         })
+
+def user_login(request):
+    if request.user is not None:
+        logout(request)
+    if request.method == 'POST':
+        form = LoginUserForm(request.POST)
+        if form.is_valid():
+            user = authenticate(username=form.cleaned_data['user_name'],
+                                password=form.cleaned_data['user_pass']
+                            )
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect('/user/'+request.user.username)
+            else:
+                data = {
+                        'user_name': form.cleaned_data['user_name'],
+                        'user_pass': form.cleaned_data['user_pass'],
+                        }
+                form = LoginUserForm(initial=data)
+    else:
+        form = LoginUserForm()
+    return render(request, 'userprofile/user_login.html', {'form': form,})
+
+def user_logout(request):
+    if request.user is not None:
+        logout(request)
+    return HttpResponseRedirect('/')
