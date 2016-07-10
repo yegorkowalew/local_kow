@@ -62,19 +62,22 @@
       <!-- left -->
       <hr>
       <ul class="nav nav-stacked">
-        {% if user.is_authenticated %}
-        <li><a href="/user/{{ user.username }}/preferences/"><i class="glyphicon glyphicon-cog"></i> Настройка</a></li> 
+        {% if user.is_superuser %}
+        <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
+        <li><a href="/money/run-money-parser/"><i class="glyphicon glyphicon-usd"></i> Проверить деньги</a></li>
+        <!-- <li><a href="/user/{{ user.username }}/preferences/"><i class="glyphicon glyphicon-cog"></i> Настройка</a></li> -->
+        <li><a href="/news/"><i class="glyphicon glyphicon-list-alt"></i> Новости</a></li> 
+        <li><a href="/about/"><i class="glyphicon glyphicon-alert"></i> О сайте</a></li> 
+        {% elif user.is_authenticated %}
+        <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
         <li><a href="/money/{{ user.username }}/run-money-parser/"><i class="glyphicon glyphicon-usd"></i> Проверить деньги</a></li>
+        <li><a href="/user/{{ user.username }}/preferences/"><i class="glyphicon glyphicon-cog"></i> Настройка</a></li> 
+        <li><a href="/news/"><i class="glyphicon glyphicon-list-alt"></i> Новости</a></li> 
+        <li><a href="/about/"><i class="glyphicon glyphicon-alert"></i> О сайте</a></li> 
+        {% else %}
+        <li><a href="/news/"><i class="glyphicon glyphicon-list-alt"></i> Новости</a></li> 
+        <li><a href="/about/"><i class="glyphicon glyphicon-alert"></i> О сайте</a></li> 
         {% endif %}
-        {% if user.is_superuser %}<li><a href="/money/run-money-parser/"><i class="glyphicon glyphicon-usd"></i> Проверить деньги</a></li>{% endif %}
-
-        
-
-        <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-list-alt"></i> Reports</a></li>
-        <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-book"></i> Books</a></li>
-        <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-briefcase"></i> Tools</a></li>
-        <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-time"></i> О сайте</a></li>
-        <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-plus"></i> Контакты</a></li>
       </ul>
       
       <hr>
@@ -106,7 +109,7 @@
     
     <div class="col-md-12">
       <hr>
-      <a href="#"><strong><i class="glyphicon glyphicon-list-alt"></i> Реклама</strong></a>  
+      <a href="#"><strong><i class="glyphicon glyphicon-chevron-right"></i> Реклама</strong></a>  
       <hr>    
     </div>
     <div class="col-md-8">
