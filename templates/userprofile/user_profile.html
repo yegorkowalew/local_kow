@@ -6,6 +6,15 @@
 
 {% block content %}
 {% load humanize %}
+
+{% if state %}
+      <div class="alert alert-{{ state.state_type }}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+ {{ state.state_message }}
+      </div>
+{% endif %}
+
+
 <div class="row">
 
 <div class="col-md-4">
@@ -60,7 +69,27 @@
 </div>
 <hr>
 
-
+<div class="panel panel-default">
+  <div class="panel-heading"> <h4>Лог</h4> </div>
+  <table class="table">
+    <tr>
+        <th>Тип события</th><th>Статус</th><th>Дата создания</th>
+   </tr>
+   {% for log in log_list %}
+   <tr>
+       <td>{{ log.log_type }}</td>
+       <td>
+       {% if log.log_status == "Успех" %}
+       <span class="label label-success">{{ log.log_status }}</span>
+       {% endif %}
+       {% if log.log_status == "Неудача" %}
+       <span class="label label-danger">{{ log.log_status }}</span>
+       {% endif %}
+       </td>
+       <td>{{ log.log_date }}</td>
+   </tr>{% endfor %}
+  </table>
+</div>
 
 {% endblock content %}
 

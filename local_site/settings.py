@@ -38,9 +38,10 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-
     'money',
     'userprofile',
+    'news',
+    'logs',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -92,6 +93,7 @@ DATABASES = {
 LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'Europe/Kiev'
+# TIME_ZONE = 'Europe/London'
 
 USE_I18N = True
 
@@ -112,3 +114,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
     '/home/yegor/local_kow/static/',
 ]
+
+TYPE_CHOICES = (
+    (1, 'Автоматическая проверка состояния счета'),
+    (2, 'Отправка письма с состоянием счета'),
+    (3, 'Авторизация пользователя на сайте'),
+    (4, 'Регистрация пользователя'),
+    (5, 'Пользователь разлогинился'),
+    (6, 'Принудительная проверка состояния счета'),
+)

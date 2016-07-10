@@ -29,3 +29,37 @@ footer {
   -o-border-radius: 10px;
   border-radius: 10px;
 }
+
+#top-nav {
+  background-image: url(/static/img/bg.jpg);
+  height: 100px;
+}
+
+footer {
+  background-color: white;
+
+}
+
+#men-hr {
+  padding-top:46px;
+}
+
+a.navbar-brand{
+  font-size: 24pt;
+  padding-top:35px;
+  
+}
+
+ .navbar-inverse .navbar-brand{
+  /*color: #2864E5;  Цвет ссылки при наведении на нее курсора мыши   */
+ }
+
+.navbar-inverse .navbar-brand a:hover{
+  color: #800000; /* Цвет ссылки при наведении на нее курсора мыши */  
+  /*color: red;  Цвет символа */
+}
+
+
+ #men{
+  color: #337AB7; /* Цвет ссылки при наведении на нее курсора мыши */  
+ }

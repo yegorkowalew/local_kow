@@ -39,7 +39,7 @@ class RegisterUserForm(forms.Form):
         except User.DoesNotExist:
             print ('нужно попытаться завести нового')
             #forms.ValidationError('Пользователь уже есть в базе, нужно попытаться завести нового')
-            r = requests.post('http://www.wimagic.com.ua/1.php', data = {'login':user_login, 'pass':user_pass})
+            r = requests.post('http://www.wimagic.com.ua/1.php', data = {'login':user_login, 'pass':user_pass })
             html = lxml.html.fromstring(r.text)
             try:
                 rr = html.xpath("/html/body/pre/text()")[0]

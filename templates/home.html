@@ -1,0 +1,27 @@
+{% extends 'template-body.html' %}
+
+{% block header %} 
+<h3><i class="glyphicon glyphicon-chevron-right"></i> Главная</h3>
+{% endblock %}
+
+{% block content %}
+{% load humanize %}
+
+{% if state %}
+      <div class="alert alert-{{ state.state_type }}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+ {{ state.state_message }}
+      </div>
+{% endif %}
+
+
+<div class="row">
+
+
+</div>
+<hr>
+
+
+{% endblock content %}
+
+

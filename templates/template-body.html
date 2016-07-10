@@ -7,11 +7,11 @@
 		<title>Wimagic-Alert :: Главная</title>
 		<meta name="generator" content="Bootply" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    	<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
-		<link href="css/styles.css" rel="stylesheet">
+		<link href="{% static "css/styles.css" %}" rel="stylesheet">
 	</head>
 	<body>
 <!-- Header -->
@@ -21,14 +21,14 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
           <span class="icon-toggle"></span>
       </button>
-      <a class="navbar-brand" href="/">Wimagic-Alert</a>
+      <a class="navbar-brand" id="men" href="/">Wimagic-Alert</a>
     </div>
 {% if user.is_authenticated %}
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown">
           <a class="dropdown-toggle" role="button" data-toggle="dropdown" href="#">
-             {{ user.first_name }} <span class="caret"></span></a>
+            {% if user.first_name %}{{ user.first_name }} {% else %}{{ user.username }}{% endif %}<span class="caret"></span></a>
           <ul id="g-account-menu" class="dropdown-menu" role="menu">
             <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
             <li><a href="/user/logout/"><i class="glyphicon glyphicon-lock"></i> Выйти</a></li>
@@ -58,14 +58,18 @@
   
   <!-- upper section -->
   <div class="row">
-	<div class="col-sm-3">
+	<div class="col-sm-3" id="men-hr">
       <!-- left -->
-      <h3><i class="glyphicon glyphicon-align-justify"></i> Меню</h3>
       <hr>
-      
       <ul class="nav nav-stacked">
-        {% if user.is_authenticated %}<li><a href="/user/{{ user.username }}/preferences" target="ext"><i class="glyphicon glyphicon-cog"></i> Настройка</a></li> {% endif %}
-        <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-link"></i> Links</a></li>
+        {% if user.is_authenticated %}
+        <li><a href="/user/{{ user.username }}/preferences/"><i class="glyphicon glyphicon-cog"></i> Настройка</a></li> 
+        <li><a href="/money/{{ user.username }}/run-money-parser/"><i class="glyphicon glyphicon-usd"></i> Проверить деньги</a></li>
+        {% endif %}
+        {% if user.is_superuser %}<li><a href="/money/run-money-parser/"><i class="glyphicon glyphicon-usd"></i> Проверить деньги</a></li>{% endif %}
+
+        
+
         <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-list-alt"></i> Reports</a></li>
         <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-book"></i> Books</a></li>
         <li><a href="http://www.bootply.com/85861" target="ext"><i class="glyphicon glyphicon-briefcase"></i> Tools</a></li>
@@ -114,12 +118,14 @@
 </div><!--/container-->
 <!-- /Main -->
 
+<div class="navbar-fixed-bottom row-fluid">
+      <div class="navbar-inner">
+          <div class="container">
+            <footer class="text-center">Частная, некоммерческая разработка: <a href="http://vk.com"><strong>Yegor Kowalew</strong></a></footer>
+          </div>
+      </div>
+</div>
 
-<footer class="text-center">Частная, некоммерческая разработка: <a href="http://vk.com"><strong>Yegor Kowalew</strong></a></footer>
-
-
- 
-	<!-- script references -->
 		<script src="{% static "js/jquery-3.0.0.min.js" %}"></script>
 		<script src="{% static "js/bootstrap.min.js" %}"></script>
 	</body>

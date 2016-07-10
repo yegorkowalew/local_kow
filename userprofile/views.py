@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from .forms import RegisterUserForm, PreferencesUserForm, LoginUserForm
@@ -6,8 +7,12 @@ from django.contrib.auth.models import User
 from userprofile.models import UserProfile
 from money.models import Post, Tarif
 
+from logs.models import Logs
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+
+from local_site.settings import TYPE_CHOICES
 
 def register_user(request):
     if request.method == 'POST':
@@ -24,16 +29,10 @@ def register_user(request):
 def pr(request):
     m_user = get_object_or_404(User, username='0041703721')
     pr_user = UserProfile.objects.get(user_id=m_user.id)
-    # new = Post(money=100, user=m_user)
-    # new.save()
-
     user = authenticate(username='0041703721', password='kisses85')
     login(request, user)
-
-
     money_last = Post.objects.filter(user=m_user).order_by('created_date').last()
     tarif_last = Tarif.objects.filter(user=m_user).last()
-    # print(tarif_last)
     if tarif_last:
         from number_to_text import num2text
         male_units = ((u'день', u'дня', u'дней'), 'm')
@@ -63,12 +62,19 @@ def user_detail(request, pk):
     else:
         days_left = None
 
+    log_list = Logs.objects.filter(log_user=m_user).order_by('-log_date')[:10]
+
+    for l in log_list:
+        l.log_type = TYPE_CHOICES[int(l.log_type)-1][1]
+    state= None
     return render(request, 'userprofile/user_profile.html', {
                                                         'm_user': m_user,
                                                         'pr_user': pr_user,
                                                         'money_last':money_last,
                                                         'tarif_last':tarif_last,
                                                         'days_left':days_left,
+                                                        'log_list': log_list,
+                                                        'state':state,
                                                         })
 
 @login_required(login_url='/user/login/')
@@ -95,7 +101,7 @@ def user_preferences(request, pk):
     }
 
     if request.method == 'POST':
-        form = PreferencesUserForm(request.POST, error_class=ParagraphErrorList)
+        form = PreferencesUserForm(request.POST)
         if form.is_valid():
             try:
                 obj = Tarif.objects.get(user=m_user)
@@ -137,7 +143,9 @@ def user_login(request):
                             )
             if user is not None:
                 login(request, user)
-                return HttpResponseRedirect('/user/'+request.user.username)
+                log = Logs(log_user = user, log_type = 3, log_status = "Успех",)
+                log.save()
+                return HttpResponseRedirect('/user/'+request.user.username+'/')
             else:
                 data = {
                         'user_name': form.cleaned_data['user_name'],
@@ -150,5 +158,39 @@ def user_login(request):
 
 def user_logout(request):
     if request.user is not None:
+        log = Logs(log_user = request.user, log_type = 5, log_status = "Успех",)
+        log.save()
         logout(request)
     return HttpResponseRedirect('/')
+
+def user_admin(request):
+    if request.user.is_superuser:
+        users = User.objects.all()
+        log_list = Logs.objects.order_by('-log_date')[:30]
+
+        # log_list = Logs.objects.filter(log_type=6).order_by('-log_date')[:10]
+
+        for l in log_list:
+            l.log_type = TYPE_CHOICES[int(l.log_type)-1][1]
+
+        data = {
+            'users_count': User.objects.all().count(),
+            'logs_count': Logs.objects.all().count(),
+            'log_list': log_list,
+        }
+        return render(request, 
+                    'userprofile/user_admin.html', 
+                    data,
+                    )
+    else:
+        return HttpResponseRedirect('/')
+
+def home(request):
+    
+    return render(request, 'home.html', {
+                                                        # 'm_user': m_user,
+                                                        # 'pr_user': pr_user,
+                                                        # 'money_last':money_last,
+                                                        # 'tarif_last':tarif_last,
+                                                        # 'days_left':days_left,
+                                                        })
