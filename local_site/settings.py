@@ -38,11 +38,17 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
+    'django.contrib.sites',
+    'django.contrib.flatpages',
+
     'money',
     'userprofile',
     'news',
     'logs',
 )
+
+SITE_ID = 1
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -120,6 +126,6 @@ TYPE_CHOICES = (
     (2, 'Отправка письма с состоянием счета'),
     (3, 'Авторизация пользователя на сайте'),
     (4, 'Регистрация пользователя'),
-    (5, 'Пользователь разлогинился'),
+    (5, 'Пользователь вышел из системы'),
     (6, 'Принудительная проверка состояния счета'),
 )
