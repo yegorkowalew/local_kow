@@ -185,12 +185,3 @@ def user_admin(request):
     else:
         return HttpResponseRedirect('/')
 
-def home(request):
-    
-    return render(request, 'home.html', {
-                                                        # 'm_user': m_user,
-                                                        # 'pr_user': pr_user,
-                                                        # 'money_last':money_last,
-                                                        # 'tarif_last':tarif_last,
-                                                        # 'days_left':days_left,
-                                                        })

@@ -123,3 +123,13 @@ def user_check_money(request, pk):
                                                         'log_list': log_list,
                                                         'state':state,
                                                         })
+
+def home(request):
+    
+    return render(request, 'home.html', {
+                                                        # 'm_user': m_user,
+                                                        # 'pr_user': pr_user,
+                                                        # 'money_last':money_last,
+                                                        # 'tarif_last':tarif_last,
+                                                        # 'days_left':days_left,
+                                                        })

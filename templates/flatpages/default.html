@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>{{ flatpage.title }}</title>
-</head>
-<body>
+{% extends 'template-body.html' %}
+
+{% block header %} 
+<h3><i class="glyphicon glyphicon-user"></i> {{ flatpage.title }}</h3>
+{% endblock %}
+
+{% block content %}
+
 {{ flatpage.content }}
-</body>
-</html>
+
+{% endblock content %}

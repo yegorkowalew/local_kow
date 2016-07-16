@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^admin/', views.user_admin, name='user_admin'),
     url(r'^(?P<pk>[0-9]+)/$', views.user_detail, name='user_detail'),
     url(r'^(?P<pk>[0-9]+)/preferences/$', views.user_preferences, name='user_detail'),
-    url(r'^', views.home, name='home'),
+    # url(r'^', views.home, name='home'),
 ]
 
 
