@@ -18,6 +18,8 @@ from local_site.settings import TYPE_CHOICES
 from django.utils import timezone
 from datetime import datetime, date, time, timedelta
 
+from number_to_text import num2text
+
 def run_money_parser(request):
     if request.user.is_superuser:
         money_pay_users = User.objects.filter(is_superuser=False)
@@ -89,7 +91,6 @@ def user_check_money(request, pk):
         cheker = False
 
     if tarif_last:
-        from number_to_text import num2text
         male_units = ((u'день', u'дня', u'дней'), 'm')
         days_left = num2text(round(money_last.money/(tarif_last.money_for_mons/30)), male_units)
     else:
@@ -125,11 +126,23 @@ def user_check_money(request, pk):
                                                         })
 
 def home(request):
-    
-    return render(request, 'home.html', {
-                                                        # 'm_user': m_user,
-                                                        # 'pr_user': pr_user,
-                                                        # 'money_last':money_last,
-                                                        # 'tarif_last':tarif_last,
-                                                        # 'days_left':days_left,
-                                                        })
+    users_count = User.objects.filter(is_superuser=False).count()
+    male_units = ((u'пользователь', u'пользователя', u'пользователей'), 'm')
+    users_count = num2text(users_count, male_units)
+    money_count = 0
+    tarif_count = 0
+
+    for us in User.objects.filter(is_superuser=False):
+        money_count = money_count + Post.objects.filter(user=us).last().money
+        tarif_count = tarif_count + Tarif.objects.filter(user=us).last().money_for_mons/30
+
+    female_units = ((u'гривна', u'гривен', u'гривен'), 'f')
+    money_count = num2text(money_count, female_units)
+    tarif_count = num2text(tarif_count, female_units)
+
+    data = {
+        'users_count': users_count,
+        'money_count': money_count,
+        'tarif_count': tarif_count,
+    }
+    return render(request, 'home.html', data,)

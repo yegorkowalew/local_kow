@@ -1,5 +1,7 @@
 {% extends 'template-body.html' %}
 
+{% block page_title %}<title>Wimagic-Alert :: {{ m_user.last_name }} {{ m_user.first_name }} {{ pr_user.middle_name }}</title>{% endblock %}
+
 {% block header %} 
 <h3><i class="glyphicon glyphicon-user"></i> {{ m_user.last_name }} {{ m_user.first_name }} {{ pr_user.middle_name }}</h3>
 {% endblock %}

@@ -1,8 +1,7 @@
 {% extends 'template-body.html' %}
 
-{% block header %} 
-<h3><i class="glyphicon glyphicon-chevron-right"></i> Главная</h3>
-{% endblock %}
+{% block page_title %}<title>Wimagic-Alert :: Главная</title>{% endblock %}
+{% block header %}<h3><i class="glyphicon glyphicon-chevron-right"></i> Главная</h3>{% endblock %}
 
 {% block content %}
 {% load humanize %}
@@ -15,9 +14,9 @@
 {% endif %}
 
 <div class="col-md-9">
-<p>Здравствуте! Этот сайт предназначен для автоматической проверки состояния счета на сайте <a href="http://www.wimagic.com.ua/">wimagic.com.ua</a>. Когда у вас на счете будет мало денег, Вам на почту будет приходить письмо от robot-wimagic-alert@gmail.com</p>
+<p>Здравствуте! Этот сайт предназначен для автоматической проверки состояния лицевого счета на сайте <a href="http://www.wimagic.com.ua/">wimagic.com.ua</a>. Когда у вас на счету будет мало денег, Вам на почту будет приходить письмо от robot-wimagic-alert@gmail.com</p>
 
-<p>На сайте сейчас зарегистрировано <b>2888</b> пользователей. В сумме у нас на счетах <b>12223.00 грн.</b>. Провайдер забирает <b>3000,00 грн.</b> в сутки.</p>
+<p>На сайте сейчас зарегистрировано <b>{{ users_count }}</b>. В сумме у нас на счетах <b>{{ money_count }}</b>. Провайдер списывает <b>{{ tarif_count }}</b> в сутки.</p>
 </div>
 <!-- <div class="col-md-3">Реклама</div> -->
 
@@ -25,10 +24,6 @@
       <a href="#"><strong><i class="glyphicon glyphicon-chevron-right"></i> Реклама</strong></a>  
     </div>
 <hr>
-
-
-
-
 
 {% endblock content %}
 
