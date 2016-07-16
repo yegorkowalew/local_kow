@@ -48,60 +48,37 @@
       <a href="/user/register/">Зарегистрироваться</a>
     </li>
   </ul>
-
 {% endif %}
   </div><!-- /container -->
 </div>
 <!-- /Header -->
-
 <!-- Main -->
 <div class="container">
-  
   <!-- upper section -->
   <div class="row">
 	<div class="col-sm-3" id="men-hr">
-      <!-- left -->
-      <hr>
+      <!-- left --><hr>
       <ul class="nav nav-stacked">
-        {% if user.is_superuser %}
-        <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
+        {% if user.is_superuser %}        <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
         <li><a href="/money/run-money-parser/"><i class="glyphicon glyphicon-usd"></i> Проверить деньги</a></li>
-        <!-- <li><a href="/user/{{ user.username }}/preferences/"><i class="glyphicon glyphicon-cog"></i> Настройка</a></li> -->
         <li><a href="/news/"><i class="glyphicon glyphicon-list-alt"></i> Новости</a></li> 
         <li><a href="/page/about/"><i class="glyphicon glyphicon-alert"></i> О сайте</a></li> 
-        {% elif user.is_authenticated %}
-        <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
+        {% elif user.is_authenticated %}        <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
         <li><a href="/money/{{ user.username }}/run-money-parser/"><i class="glyphicon glyphicon-usd"></i> Проверить деньги</a></li>
         <li><a href="/user/{{ user.username }}/preferences/"><i class="glyphicon glyphicon-cog"></i> Настройка</a></li> 
         <li><a href="/news/"><i class="glyphicon glyphicon-list-alt"></i> Новости</a></li> 
         <li><a href="/page/about/"><i class="glyphicon glyphicon-alert"></i> О сайте</a></li> 
-        {% else %}
-        <li><a href="/news/"><i class="glyphicon glyphicon-list-alt"></i> Новости</a></li> 
+        {% else %}        <li><a href="/news/"><i class="glyphicon glyphicon-list-alt"></i> Новости</a></li> 
         <li><a href="/page/about/"><i class="glyphicon glyphicon-alert"></i> О сайте</a></li> 
-        {% endif %}
-      </ul>
-      
+        {% endif %}      </ul>
       <hr>
-      
   	</div><!-- /span-3 -->
-    <div class="col-sm-9">
-      	
-      <!-- column 2 -->	
-       {% block header %} {% endblock %}
-            
-       <hr>
-      
+    <div class="col-sm-9">{% block header %} {% endblock %}<hr>
 	   <div class="row">
-            <!-- center left-->	
             {% block content %}
             {% endblock %}
-            
-           <!--center-right-->
-
-     
        </div><!--/row-->
   	</div><!--/col-span-9-->
-    
   </div><!--/row-->
   <!-- /upper section -->
   

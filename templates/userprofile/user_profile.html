@@ -12,7 +12,7 @@
 {% if state %}
       <div class="alert alert-{{ state.state_type }}">
         <button type="button" class="close" data-dismiss="alert">×</button>
- {{ state.state_message }}
+ {{ state.state_message|safe }}
       </div>
 {% endif %}
 
@@ -67,7 +67,6 @@
     <div class="well">Последняя проверка:<span class="badge pull-right">{{ money_last.created_date|naturaltime }} </span> </div>
 </div>
 
-
 </div>
 <hr>
 
@@ -81,10 +80,10 @@
    <tr>
        <td>{{ log.log_type }}</td>
        <td>
-       {% if log.log_status == "Успех" %}
+       {% if log.log_status == LOGSTATUSYES %}
        <span class="label label-success">{{ log.log_status }}</span>
        {% endif %}
-       {% if log.log_status == "Неудача" %}
+       {% if log.log_status == LOGSTATUSNO %}
        <span class="label label-danger">{{ log.log_status }}</span>
        {% endif %}
        </td>

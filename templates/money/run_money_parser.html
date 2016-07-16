@@ -35,7 +35,14 @@
    <tr>
        <td>{% if log.log_user.first_name %}{{ log.log_user.first_name }} {{ log.log_user.last_name }}{% else %}{{ log.log_user }}{% endif %}</td>
        <td>{{ log.log_type }}</td>
-       <td>{{ log.log_status }}</td>
+              <td>
+       {% if log.log_status == LOGSTATUSYES %}
+       <span class="label label-success">{{ log.log_status }}</span>
+       {% endif %}
+       {% if log.log_status == LOGSTATUSNO %}
+       <span class="label label-danger">{{ log.log_status }}</span>
+       {% endif %}
+       </td>
        <td>{{ log.log_date }}</td>
    </tr>
    {% endfor %}

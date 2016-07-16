@@ -14,7 +14,7 @@ from django.contrib.auth.decorators import login_required
 import requests
 import lxml.html
 
-from local_site.settings import TYPE_CHOICES
+from local_site.settings import TYPE_CHOICES, LOGSTATUSYES, LOGSTATUSNO
 from django.utils import timezone
 from datetime import datetime, date, time, timedelta
 
@@ -36,6 +36,8 @@ def run_money_parser(request):
         'users_count': User.objects.all().count(),
         'logs_count': Logs.objects.all().count(),
         'log_list': log_list,
+        'LOGSTATUSYES':LOGSTATUSYES,
+        'LOGSTATUSNO':LOGSTATUSNO,
     }
 
     return render(request, 
@@ -65,10 +67,10 @@ def money_check(check_user):
         new = Post(money=money_r, user=check_user)
         new.save()
         
-        log = Logs(log_user = check_user, log_type = 6, log_status = "Успех",)
+        log = Logs(log_user = check_user, log_type = 6, log_status = LOGSTATUSYES,)
         log.save()
     except:
-        log = Logs(log_user = check_user, log_type = 6, log_status = "Неудача",)
+        log = Logs(log_user = check_user, log_type = 6, log_status = LOGSTATUSNO,)
         log.save()
 
 
@@ -87,7 +89,7 @@ def user_check_money(request, pk):
         cheker = True
     else:
         state_type = 'warning'
-        state_message = 'Принудительно проверять деньги чаще чем раз в пять минут нельзя!'
+        state_message = '<strong>Внимание!</strong> Принудительно проверять деньги чаще чем раз в пять минут нельзя!'
         cheker = False
 
     if tarif_last:
@@ -103,12 +105,12 @@ def user_check_money(request, pk):
 
     # print(log_list.first().log_status)
     if cheker != False:
-        if log_list.first().log_status == "Неудача":
+        if log_list.first().log_status == LOGSTATUSNO:
             state_type = 'danger'
-            state_message = 'Что-то пошло не так, подробнее в логе...'
-        if log_list.first().log_status == "Успех":
+            state_message = '<strong>Ошибка!</strong> Что-то пошло не так. Попробуйте повторить немножко позже.'
+        if log_list.first().log_status == LOGSTATUSYES:
             state_type = 'success'
-            state_message = 'Все прошло как надо'
+            state_message = '<strong>Отлично!</strong> Все прошло как надо! Данные обновлены!'
 
 
     state = {
@@ -123,6 +125,8 @@ def user_check_money(request, pk):
                                                         'days_left':days_left,
                                                         'log_list': log_list,
                                                         'state':state,
+                                                        'LOGSTATUSYES':LOGSTATUSYES,
+                                                        'LOGSTATUSNO':LOGSTATUSNO,
                                                         })
 
 def home(request):

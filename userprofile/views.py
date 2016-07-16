@@ -12,7 +12,7 @@ from logs.models import Logs
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-from local_site.settings import TYPE_CHOICES
+from local_site.settings import TYPE_CHOICES, LOGSTATUSYES, LOGSTATUSNO
 
 def register_user(request):
     if request.method == 'POST':
@@ -26,27 +26,27 @@ def register_user(request):
     return render(request, 'userprofile/register_user.html', {'form': form})
 
     
-def pr(request):
-    m_user = get_object_or_404(User, username='0041703721')
-    pr_user = UserProfile.objects.get(user_id=m_user.id)
-    user = authenticate(username='0041703721', password='kisses85')
-    login(request, user)
-    money_last = Post.objects.filter(user=m_user).order_by('created_date').last()
-    tarif_last = Tarif.objects.filter(user=m_user).last()
-    if tarif_last:
-        from number_to_text import num2text
-        male_units = ((u'день', u'дня', u'дней'), 'm')
-        days_left = num2text(round(money_last.money/(tarif_last.money_for_mons/30)), male_units)
-    else:
-        days_left = None
+# def pr(request):
+#     m_user = get_object_or_404(User, username='0041703721')
+#     pr_user = UserProfile.objects.get(user_id=m_user.id)
+#     user = authenticate(username='0041703721', password='kisses85')
+#     login(request, user)
+#     money_last = Post.objects.filter(user=m_user).order_by('created_date').last()
+#     tarif_last = Tarif.objects.filter(user=m_user).last()
+#     if tarif_last:
+#         from number_to_text import num2text
+#         male_units = ((u'день', u'дня', u'дней'), 'm')
+#         days_left = num2text(round(money_last.money/(tarif_last.money_for_mons/30)), male_units)
+#     else:
+#         days_left = None
     
-    return render(request, 'userprofile/user_profile.html', {
-                                                        'm_user': m_user,
-                                                        'pr_user': pr_user,
-                                                        'money_last':money_last,
-                                                        'tarif_last':tarif_last,
-                                                        'days_left':days_left,
-                                                        })
+#     return render(request, 'userprofile/user_profile.html', {
+#                                                         'm_user': m_user,
+#                                                         'pr_user': pr_user,
+#                                                         'money_last':money_last,
+#                                                         'tarif_last':tarif_last,
+#                                                         'days_left':days_left,
+#                                                         })
 
 @login_required(login_url='/user/login/')
 def user_detail(request, pk):
@@ -75,6 +75,8 @@ def user_detail(request, pk):
                                                         'days_left':days_left,
                                                         'log_list': log_list,
                                                         'state':state,
+                                                        'LOGSTATUSYES':LOGSTATUSYES,
+                                                        'LOGSTATUSNO':LOGSTATUSNO,
                                                         })
 
 @login_required(login_url='/user/login/')
@@ -143,7 +145,7 @@ def user_login(request):
                             )
             if user is not None:
                 login(request, user)
-                log = Logs(log_user = user, log_type = 3, log_status = "Успех",)
+                log = Logs(log_user = user, log_type = 3, log_status = LOGSTATUSYES,)
                 log.save()
                 return HttpResponseRedirect('/user/'+request.user.username+'/')
             else:
@@ -158,7 +160,7 @@ def user_login(request):
 
 def user_logout(request):
     if request.user is not None:
-        log = Logs(log_user = request.user, log_type = 5, log_status = "Успех",)
+        log = Logs(log_user = request.user, log_type = 5, log_status = LOGSTATUSYES,)
         log.save()
         logout(request)
     return HttpResponseRedirect('/')
@@ -177,6 +179,8 @@ def user_admin(request):
             'users_count': User.objects.all().count(),
             'logs_count': Logs.objects.all().count(),
             'log_list': log_list,
+            'LOGSTATUSYES':LOGSTATUSYES,
+            'LOGSTATUSNO':LOGSTATUSNO,
         }
         return render(request, 
                     'userprofile/user_admin.html', 
