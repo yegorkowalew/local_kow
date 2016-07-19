@@ -5,15 +5,36 @@
 {% if state %}      <div class="alert alert-{{ state.state_type }}">
         <button type="button" class="close" data-dismiss="alert">×</button>
  {{ state.state_message }}      </div>{% endif %}
+
 <div class="col-md-9">
 <p>Здравствуте! Этот сайт предназначен для автоматической проверки состояния лицевого счета на сайте <a href="http://www.wimagic.com.ua/">wimagic.com.ua</a>. Когда у вас на счету будет мало денег, Вам на почту будет приходить письмо от robot-wimagic-alert@gmail.com</p>
 
 <p>На сайте сейчас зарегистрировано <b>{{ users_count }}</b>. В сумме у нас на счетах <b>{{ money_count }}</b>. Провайдер списывает <b>{{ tarif_count }}</b> в сутки.</p>
 </div>
-    <div class="col-md-3">
-      <a href="#"><strong><i class="glyphicon glyphicon-chevron-right"></i> Реклама</strong></a>  
-    </div>
-<hr>
+<div class="col-md-9"><a href="" class="news-link">Подробнее</a></div>
+
+<!-- <div class="col-md-3">
+	<a href="#"><strong><i class="glyphicon glyphicon-chevron-right"></i> Реклама</strong></a>  
+</div> -->
+
+<h4 class="col-md-9"><i class="glyphicon glyphicon-chevron-right"></i> Новости провайдера</h4>
+<ul class="col-md-9">
+	<li class="list-group-item news"><a href="">ПОСПІШАЙ!</a><span>31.05.2016</span></li>
+	<li class="list-group-item news"><a href="">ПІДВИЩЕННЯ ВАРТОСТІ ПОСЛУГ</a><span>31.05.2016</span></li>
+	<li class="list-group-item news"><a href="">ПОСПІШАЙ ПІДКЛЮЧИТИСЬ!</a><span>31.05.2016</span></li>
+</ul>
+<div class="col-md-9"><a href="" class="news-link">Больше</a></div>
+
+
+
+<h4 class="col-md-9"><i class="glyphicon glyphicon-chevron-right"></i> Новости разработчика</h4>
+<ul class="col-md-9">
+	<li class="list-group-item news"><a href="">Работа над парсером новостей!</a><span>31.05.2016</span></li>
+	<li class="list-group-item news"><a href="">Разобрался с systemd. Дока небольшая в папке doc</a><span>31.05.2016</span></li>
+	<li class="list-group-item news"><a href="">В шаблоны дописан title. Добавлен скрипт проверки состояния счета всех пользователей из консоли (manage.py custom commands)</a><span>31.05.2016</span></li>
+</ul>
+<div class="col-md-9"><a href="" class="news-link">Больше</a></div>
+
 
 {% endblock content %}
 

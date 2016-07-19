@@ -63,3 +63,17 @@ a.navbar-brand{
  #men{
   color: #337AB7; /* Цвет ссылки при наведении на нее курсора мыши */  
  }
+
+ .news{
+margin-bottom: 10px;
+
+ }
+
+.news span{
+  float: right;
+}
+
+.news-link{
+  float: right;
+  margin-bottom: 20px;
+}
