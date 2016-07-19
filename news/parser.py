@@ -1,50 +1,46 @@
 # -*- coding:utf-8 -*-
 
-from lxml import etree, html
-
-f = """
-<div class="items-row cols-1 row-0 row-fluid clearfix">
-	<div class="span12">
-		<div class="item column-1" itemprop="blogPost" itemscope="" itemtype="http://schema.org/BlogPosting">
-			<div class="page-header">
-				<h2 itemprop="name">
-					Підвищення вартості послуг
-				</h2>
-			</div>
-			<dl class="article-info  muted">
-				<dt class="article-info-term">
-					Деталі
-				</dt>
-				<dd class="published">
-					<span class="icon-calendar"></span>
-						<time datetime="2016-03-14T13:00:16+00:00" itemprop="datePublished">14/03/2016</time>
-				</dd>
-			</dl>
-	 			Шановні абоненти!<br>
-	 			<br>
-	 			З 01.04.2016г. компанія «Ведекон» підвищує вартість наданих послуг:<br>
-	 			<br>
-	 			- тарифний план 5 Мбіт/1 Мбіт - 200 грн/міс (з ПДВ)<br>
-	 			<br>
-	 			- тарифний план 2 Мбіт/0,512 Мбіт - 140 грн/міс (з ПДВ)
-		</div>
-			<!-- end item -->
-	</div>
-		<!-- end span -->
-</div>
-"""
+import lxml.html
+import requests
 from lxml.cssselect import CSSSelector
 
-doc=html.fromstring(f)
-# for div in doc.cssselect('div.items-row.cols-1.row-0.row-fluid.clearfix div div div h2'):
-    # print(div.text_content())
+import git
 
-    #main > div.blog > div.items-row.cols-1.row-0.row-fluid.clearfix > div > div
-    #main > div.blog > div.items-row.cols-1.row-0.row-fluid.clearfix > div > div > div > h2
-    #main > div.blog > div.items-row.cols-1.row-0.row-fluid.clearfix > div > div > dl > dd
-    #main > div.blog > div.items-row.cols-1.row-0.row-fluid.clearfix > div > div > dl > dd > time
-    #main > div.blog > div.items-row.cols-1.row-0.row-fluid.clearfix > div > div > d
+def go_news_wed():
+    """
+	first = go_news_wed()
+	for i, y in first.items():
+		print(i)
+		print(y)
+	# print(list(news_list.keys())[0])
+	"""
+    r = requests.get('http://www.wimagic.com.ua/ua/news')
+    doc = lxml.html.fromstring(r.text)
+    news_list = {}
+    for div in doc.cssselect('div.clearfix'):
+        # print(div.cssselect(' div div dl dd time[datetime]')[0].get('datetime').replace('T',' ').split('+')[0])
+        # print(div.cssselect(' div div div h2')[0].text_content().replace('	', '').replace('\n',''))
+        news_list[div.cssselect(' div div dl dd time[datetime]')[0].get('datetime').replace('T',' ').split('+')[0]] = div.cssselect(' div div div h2')[0].text_content().replace('	', '').replace('\n','')
+    
+    return news_list
 
-print(doc.cssselect('div.items-row.cols-1.row-0.row-fluid.clearfix div div div h2')[0].text_content())
-print(doc.cssselect('div.items-row.cols-1.row-0.row-fluid.clearfix div div dl dd time')[0].text_content())
-# print(doc.cssselect('div.items-row.cols-1.row-0.row-fluid.clearfix div div dl')[0].text_content())
+
+
+def go_news_commit():
+    """
+    git log --pretty=format:"%ad - %s"
+    git diff --shortstat краткая статистика по изменениям из последнего коммита
+    print(list(list1.keys())[0])
+
+    """
+    g = git.Git("/home/yegor/local_site/local_kow/")
+    # commit_log = g.log("--date=format:%d-%m-%Y %H:%M:%S", "--pretty=format:" + '::%ad::%s').split('\n')
+    commit_log = g.log("--date=format:%Y-%m-%d %H:%M:%S", "--pretty=format:" + '::%ad::%s').split('\n')
+    # commit_log = g.log("--pretty=format:" + '::%ad::%s').split('\n')
+    commit_list = {}
+    for i in commit_log:
+    	i = i.split('::')
+    	commit_list[i[1]] = i[2]
+
+    return commit_list
+
