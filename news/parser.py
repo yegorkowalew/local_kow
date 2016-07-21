@@ -3,7 +3,6 @@
 import lxml.html
 import requests
 from lxml.cssselect import CSSSelector
-
 import git
 
 def go_news_wed():
@@ -24,8 +23,6 @@ def go_news_wed():
     
     return news_list
 
-
-
 def go_news_commit():
     """
     git log --pretty=format:"%ad - %s"
@@ -33,7 +30,7 @@ def go_news_commit():
     print(list(list1.keys())[0])
 
     """
-    g = git.Git("/home/yegor/local_site/local_kow/")
+    g = git.Git("/home/yegor/local_kow/")
     # commit_log = g.log("--date=format:%d-%m-%Y %H:%M:%S", "--pretty=format:" + '::%ad::%s').split('\n')
     commit_log = g.log("--date=format:%Y-%m-%d %H:%M:%S", "--pretty=format:" + '::%ad::%s').split('\n')
     # commit_log = g.log("--pretty=format:" + '::%ad::%s').split('\n')
@@ -44,3 +41,11 @@ def go_news_commit():
 
     return commit_list
 
+# print (go_news_commit())
+# print(list(go_news_commit())[0])
+# print(list(go_news_commit().items())[0])
+# print(list(go_news_wed().values())[0.)
+
+# for dat, header in go_news_commit().items():
+    # print(dat)
+    # print(header)

@@ -132,3 +132,8 @@ TYPE_CHOICES = (
 
 LOGSTATUSYES = "Успешно"
 LOGSTATUSNO = "Ошибка"
+
+NEWS_CHOICES = (
+    (1, 'Новости провайдера'),
+    (2, 'Новости разработчика'),
+)

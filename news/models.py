@@ -2,6 +2,7 @@
 
 from django.db import models
 from django.utils import timezone
+from local_site.settings import NEWS_CHOICES
 
 class News(models.Model):
     title = models.CharField(
@@ -10,6 +11,7 @@ class News(models.Model):
                         )
     text = models.TextField(
                         verbose_name = "Содержание новости",
+                        blank = True,
                         )
     created_date = models.DateTimeField(
                         default=timezone.now, 
@@ -21,7 +23,10 @@ class News(models.Model):
                         blank=True, 
                         null=True
                         )
-
+    news_type = models.IntegerField(
+                        choices=NEWS_CHOICES, 
+                        verbose_name = "Тип новости",
+                        )
     def __str__(self):
         return str(self.title)
     

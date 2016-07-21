@@ -3,15 +3,16 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from local_site.settings import TYPE_CHOICES
 
-TYPE_CHOICES = (
+"""TYPE_CHOICES = (
     (1, 'Автоматическая проверка состояния счета'),
     (2, 'Отправка письма с состоянием счета'),
     (3, 'Авторизация пользователя на сайте'),
     (4, 'Регистрация пользователя'),
     (5, 'Пользователь разлогинился'),
     (6, 'Принудительная проверка состояния счета'),
-)
+)"""
 
 class Logs(models.Model):
     log_user = models.ForeignKey(

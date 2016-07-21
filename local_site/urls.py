@@ -13,4 +13,5 @@ urlpatterns = [
     url(r'^page/', include('django.contrib.flatpages.urls')),
     # url(r'^/', views., name='run-money-parser'),
 
+    url(r'^news/', include('news.urls')),
 ]
