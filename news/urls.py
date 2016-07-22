@@ -6,6 +6,7 @@ urlpatterns = [
     # url(r'^login/', views.user_login, name='user_login'),
     # url(r'^logout/', views.user_logout, name='user_logout'),
     url(r'^admin/readd-all-commits', views.readd_all_commits, name='readd_all_commits'),
+    url(r'^admin/readd-all-news-wed', views.readd_all_news_wed, name='readd_all_news_wed'),
     # url(r'^(?P<pk>[0-9]+)/$', views.user_detail, name='user_detail'),
     # url(r'^(?P<pk>[0-9]+)/preferences/$', views.user_preferences, name='user_detail'),
     # url(r'^', views.home, name='home'),

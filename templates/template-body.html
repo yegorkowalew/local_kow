@@ -62,7 +62,7 @@
         {% if user.is_superuser %}        <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>
         <li><a href="/money/run-money-parser/"><i class="glyphicon glyphicon-usd"></i> Проверить деньги</a></li>
         <li><a href="/news/admin/readd-all-commits/"><i class="glyphicon glyphicon-sort-by-order-alt"></i> Добавить все коммиты заново</a></li>
-        <li><a href="/news/admin/readd-all-commits/"><i class="glyphicon glyphicon-sort-by-attributes-alt"></i> Добавить все новости заново</a></li>
+        <li><a href="/news/admin/readd-all-news-wed/"><i class="glyphicon glyphicon-sort-by-attributes-alt"></i> Добавить все новости заново</a></li>
         <li><a href="/news/"><i class="glyphicon glyphicon-list-alt"></i> Новости</a></li> 
         <li><a href="/page/about/"><i class="glyphicon glyphicon-alert"></i> О сайте</a></li> 
         {% elif user.is_authenticated %}        <li><a href="/user/{{ user.username }}/"><i class="glyphicon glyphicon-user"></i> Профиль</a></li>

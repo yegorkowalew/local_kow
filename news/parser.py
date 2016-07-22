@@ -19,7 +19,7 @@ def go_news_wed():
     for div in doc.cssselect('div.clearfix'):
         # print(div.cssselect(' div div dl dd time[datetime]')[0].get('datetime').replace('T',' ').split('+')[0])
         # print(div.cssselect(' div div div h2')[0].text_content().replace('    ', '').replace('\n',''))
-        news_list[div.cssselect(' div div dl dd time[datetime]')[0].get('datetime').replace('T',' ').split('+')[0]] = div.cssselect(' div div div h2')[0].text_content().replace('    ', '').replace('\n','')
+        news_list[div.cssselect(' div div dl dd time[datetime]')[0].get('datetime').replace('T',' ').split('+')[0]] = div.cssselect(' div div div h2')[0].text_content().replace('\t', '').replace('\n','')
     
     return news_list
 

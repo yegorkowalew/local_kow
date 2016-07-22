@@ -145,13 +145,11 @@ def home(request):
     money_count = num2text(money_count, female_units)
     tarif_count = num2text(tarif_count, female_units)
 
-    # for commits in News.objects.order_by('-created_date')[:3]:
-        # print (commits.title)
-
     data = {
         'users_count': users_count,
         'money_count': money_count,
         'tarif_count': tarif_count,
-        'commits':News.objects.order_by('-created_date')[:3],
+        'commits':News.objects.filter(news_type=2).order_by('-created_date')[:3],
+        'news_wed':News.objects.filter(news_type=1).order_by('-created_date')[:3],
     }
     return render(request, 'home.html', data,)

@@ -18,11 +18,14 @@
 </div> -->
 
 <h4 class="col-md-9"><i class="glyphicon glyphicon-chevron-right"></i> Новости провайдера</h4>
-<ul class="col-md-9">
-	<li class="list-group-item news"><a href="">ПОСПІШАЙ!</a><span>31.05.2016</span></li>
-	<li class="list-group-item news"><a href="">ПІДВИЩЕННЯ ВАРТОСТІ ПОСЛУГ</a><span>31.05.2016</span></li>
-	<li class="list-group-item news"><a href="">ПОСПІШАЙ ПІДКЛЮЧИТИСЬ!</a><span>31.05.2016</span></li>
-</ul>
+<div class="col-md-9">
+{%for news in news_wed %}
+	<div class="row list-group-item news">
+		<a href="">{{news.title}}</a>
+		<span class="badge">{{news.created_date}}</span>
+	</div>
+{%endfor%}
+</div>
 <div class="col-md-9"><a href="" class="news-link">Больше</a></div>
 
 <h4 class="col-md-9"><i class="glyphicon glyphicon-chevron-right"></i> Новости разработчика</h4>
@@ -34,7 +37,6 @@
 	</div>
 {%endfor%}
 </div>
-
 <div class="col-md-9"><a href="" class="news-link">Больше</a></div>
 
 <!-- |naturaltime -->
