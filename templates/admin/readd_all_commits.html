@@ -4,7 +4,13 @@
 {% block header %}<h3><i class="glyphicon glyphicon-user"></i> {{ user.username }} </h3>{% endblock %}
 
 {% block content %}
-{% load humanize %}
+{% if state %}
+      <div class="alert alert-{{ state.state_type }}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+ {{ state.state_message|safe }}
+      </div>
+{% endif %}
+
 <h4 class="col-md-9"><i class="glyphicon glyphicon-chevron-right"></i> Новости разработчика</h4>
 <div class="col-md-9">
 {% for datec, newsc in news_commit.items %}

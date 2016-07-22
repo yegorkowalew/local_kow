@@ -1,0 +1,50 @@
+{% extends 'template-body.html' %}
+<!-- |truncatewords:80|safe -->
+{% block page_title %}<title>Wimagic-Alert :: {{ user.username }}</title>{% endblock %}
+{% block header %}<h3><i class="glyphicon glyphicon-user"></i> {{ news_type }}. Страница {{ news.number }} из {{ news.paginator.num_pages }}.</h3>{% endblock %}
+
+{% block content %}
+{% if state %}
+      <div class="alert alert-{{ state.state_type }}">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+ {{ state.state_message|safe }}
+      </div>
+{% endif %}
+<div class="col-md-9">
+	<ul class="pager">
+		<li class="previous"><a href="/news/wimagic/">Новости провайдера</a></li>
+		<li><a href="/news/all/">Все</a></li>
+		<li class="next"><a href="/news/commits/">Новости разработчика</a></li>
+	</ul>
+</div>
+
+
+<div class="col-md-9">
+{% for new in news %}
+	<div class="row list-group-item news">
+		<a href="">{{ new.title }}</a>
+		<span class="badge">{{ new.created_date }}</span>
+	</div>
+{%endfor%}
+</div>
+
+<div class="col-md-9">
+<nav>
+  <ul class="pager">
+	{% if news.has_previous %}
+		<li class="previous"><a href="?page={{ news.previous_page_number }}"><span aria-hidden="true">&larr;</span> Предыдущие</a></li>
+	{% else %}
+		<li class="previous disabled"><a href="#"><span aria-hidden="true">&larr;</span> Предыдущие</a></li>
+	{% endif %}
+
+	{% if news.has_next %}
+        <li class="next"><a href="?page={{ news.next_page_number }}">Следующие <span aria-hidden="true">&rarr;</span></a></li>
+	{% else %}
+		<li class="next disabled"><a href="#">Следующие <span aria-hidden="true">&rarr;</span></a></li>
+    {% endif %}
+  </ul>
+</nav>
+</div>
+{% endblock content %}
+
+
