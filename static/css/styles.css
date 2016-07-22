@@ -69,11 +69,24 @@ margin-bottom: 10px;
 
  }
 
-.news span{
+/*.news a{
+  color:red;
+  clear: both;
+  }*/
+
+/*.news span{
   float: right;
-}
+  
+}*/
 
 .news-link{
   float: right;
   margin-bottom: 20px;
 }
+/*
+.div {
+    min-width: 100%;
+    min-height: 100%;
+    position: relative;
+}
+*/

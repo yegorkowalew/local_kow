@@ -1,0 +1,10 @@
+lxml
+
+gitpython
+pip3 install gitpython
+
+requests
+pip3 install requests
+
+cssselect
+pip3 install cssselect

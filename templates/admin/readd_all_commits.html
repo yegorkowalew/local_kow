@@ -5,13 +5,16 @@
 
 {% block content %}
 {% load humanize %}
-
 <h4 class="col-md-9"><i class="glyphicon glyphicon-chevron-right"></i> Новости разработчика</h4>
-<ul class="col-md-9">
+<div class="col-md-9">
 {% for datec, newsc in news_commit.items %}
-  <li class="list-group-item news"><a href="/">{{newsc}}</a> <span>{{datec}}</span></li>
-{% endfor %}
-</ul>
+	<div class="row list-group-item news">
+		<a href="">{{newsc}}</a>
+		<span class="badge">{{datec}}</span>
+	</div>
+{%endfor%}
+</div>
+
 <div class="col-md-9"><a href="" class="news-link">Больше</a></div>
 
 {% endblock content %}

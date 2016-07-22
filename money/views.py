@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from userprofile.models import UserProfile
 from logs.models import Logs
 from money.models import Post, Tarif
+from news.models import News
 
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -144,9 +145,13 @@ def home(request):
     money_count = num2text(money_count, female_units)
     tarif_count = num2text(tarif_count, female_units)
 
+    # for commits in News.objects.order_by('-created_date')[:3]:
+        # print (commits.title)
+
     data = {
         'users_count': users_count,
         'money_count': money_count,
         'tarif_count': tarif_count,
+        'commits':News.objects.order_by('-created_date')[:3],
     }
     return render(request, 'home.html', data,)

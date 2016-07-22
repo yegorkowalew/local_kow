@@ -35,7 +35,7 @@
 {% if tarif_last %}
 	<span class="badge pull-right">{{ tarif_last.money_for_mons|floatformat:2 }} грн./мес.</span></div>
 {% else %}
-	<span class="pull-right"><a href="preferences" target="ext"><i class="glyphicon glyphicon-cog"></i> Настроить</a></span></div>
+	<span class="pull-right"><a href="/user/{{ m_user.username }}/preferences/" target="ext"><i class="glyphicon glyphicon-cog"></i> Настроить</a></span></div>
 {% endif %}
 
 
