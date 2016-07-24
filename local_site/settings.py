@@ -138,3 +138,13 @@ NEWS_CHOICES = (
     (1, 'Новости провайдера'),
     (2, 'Новости разработчика'),
 )
+
+# gmail.com
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = "wimagic.alert@gmail.com"
+EMAIL_HOST_PASSWORD = "dtltrjyhj,jn2016"
+EMAIL_USE_TLS = True
+
+SERVER_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

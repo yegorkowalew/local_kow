@@ -25,29 +25,6 @@ def register_user(request):
         form = RegisterUserForm()
     return render(request, 'userprofile/register_user.html', {'form': form})
 
-    
-# def pr(request):
-#     m_user = get_object_or_404(User, username='0041703721')
-#     pr_user = UserProfile.objects.get(user_id=m_user.id)
-#     user = authenticate(username='0041703721', password='kisses85')
-#     login(request, user)
-#     money_last = Post.objects.filter(user=m_user).order_by('created_date').last()
-#     tarif_last = Tarif.objects.filter(user=m_user).last()
-#     if tarif_last:
-#         from number_to_text import num2text
-#         male_units = ((u'день', u'дня', u'дней'), 'm')
-#         days_left = num2text(round(money_last.money/(tarif_last.money_for_mons/30)), male_units)
-#     else:
-#         days_left = None
-    
-#     return render(request, 'userprofile/user_profile.html', {
-#                                                         'm_user': m_user,
-#                                                         'pr_user': pr_user,
-#                                                         'money_last':money_last,
-#                                                         'tarif_last':tarif_last,
-#                                                         'days_left':days_left,
-#                                                         })
-
 @login_required(login_url='/user/login/')
 def user_detail(request, pk):
     m_user = get_object_or_404(User, username=pk)
@@ -107,7 +84,6 @@ def user_preferences(request, pk):
         if form.is_valid():
             try:
                 obj = Tarif.objects.get(user=m_user)
-                print(obj.money_for_mons)
                 obj.money_for_mons = form.cleaned_data['user_tarif']
                 obj.save()
             except Tarif.DoesNotExist:
