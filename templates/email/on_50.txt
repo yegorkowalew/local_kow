@@ -1,0 +1,8 @@
+Здравствуйте {{ m_user.first_name }} {{ pr_user.middle_name }}.
+Уведомляю Вас о низком балансе лицевого счёта.
+
+Баланс: {{ money_last.money|floatformat:2 }}грн.
+Расходы: {{ tarif_last|floatformat:2 }} грн./день
+Хватит на: {{ days_left }}
+
+С Уважением, Wimagic-Alert.

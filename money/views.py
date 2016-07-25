@@ -152,24 +152,16 @@ def home(request):
         'commits':News.objects.filter(news_type=2).order_by('-created_date')[:3],
         'news_wed':News.objects.filter(news_type=1).order_by('-created_date')[:3],
     }
-    # email_on(request)
+    # e_send_on_50(request)
     return render(request, 'home.html', data,)
 
-
-# views.py (или другое место)
-# from local_site.settings import EMAIL_HOST_USER
-# from django.core.mail import send_mail
-# send_mail('Писмьмо от робота', 'Кто-то смотрит новости', EMAIL_HOST_USER, ['kowalew.backup@gmail.com'], )
-
 from django.template.loader import get_template
-# from django.conf import settings
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from local_site.settings import EMAIL_HOST_USER
 
-def email_on(request):
+def e_send_on_email(request):
     subject = 'Wimagic-alert теперь знает Вашу почту!'
-
     money_last = Post.objects.filter(user=request.user).order_by('created_date').last()
     tarif_last = Tarif.objects.filter(user=request.user).last()
     male_units = ((u'день', u'дня', u'дней'), 'm')
@@ -183,6 +175,28 @@ def email_on(request):
 
     txt = render_to_string('email/on_email.txt', context)
     html = render_to_string('email/on_email.html', context)
+
+    send_mail(subject, txt, EMAIL_HOST_USER, ['kowalew.backup@gmail.com'], 
+          fail_silently=False, html_message=html)
+
+
+def e_send_on_50(request):
+    subject = 'У Вас уже меньше 50грн. на балансе.'
+    money_last = Post.objects.filter(user=request.user).order_by('created_date').last()
+    tarif_last = Tarif.objects.filter(user=request.user).last()
+    male_units = ((u'день', u'дня', u'дней'), 'm')
+    (tarif_last.money_for_mons/30)
+    context = {
+        'title': subject, 
+        'pr_user': UserProfile.objects.get(user_id=request.user.id),
+        'money_last': money_last,
+        'tarif_last':tarif_last.money_for_mons/30,
+        'days_left': num2text(round(money_last.money/(tarif_last.money_for_mons/30)), male_units),
+        'request':request,
+        }
+
+    txt = render_to_string('email/on_50.txt', context)
+    html = render_to_string('email/on_50.html', context)
 
     send_mail(subject, txt, EMAIL_HOST_USER, ['kowalew.backup@gmail.com'], 
           fail_silently=False, html_message=html)
