@@ -53,6 +53,6 @@ class Command(BaseCommand):
 
         for i in money_pay_users:
             money_check(i)
-            self.stdout.write(i.username)
+            # self.stdout.write(i.username)
 
 #
