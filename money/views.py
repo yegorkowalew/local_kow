@@ -185,7 +185,7 @@ def e_send_on_50(request):
     money_last = Post.objects.filter(user=request.user).order_by('created_date').last()
     tarif_last = Tarif.objects.filter(user=request.user).last()
     male_units = ((u'день', u'дня', u'дней'), 'm')
-    (tarif_last.money_for_mons/30)
+    # (tarif_last.money_for_mons/30)
     context = {
         'title': subject, 
         'pr_user': UserProfile.objects.get(user_id=request.user.id),

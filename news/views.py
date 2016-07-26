@@ -126,9 +126,9 @@ def all_news(request, news_type='all'):
         all_news = News.objects.all().order_by('-created_date')
         news_type = 'Все новости'
         # views.py (или другое место)
-        from local_site.settings import EMAIL_HOST_USER
-        from django.core.mail import send_mail
-        send_mail('Писмьмо от робота', 'Кто-то смотрит новости', EMAIL_HOST_USER, ['kowalew.backup@gmail.com'], )
+        # from local_site.settings import EMAIL_HOST_USER
+        # from django.core.mail import send_mail
+        # send_mail('Писмьмо от робота', 'Кто-то смотрит новости', EMAIL_HOST_USER, ['kowalew.backup@gmail.com'], )
 
     elif news_type=='commits':
         all_news = News.objects.filter(news_type=2).order_by('-created_date')
