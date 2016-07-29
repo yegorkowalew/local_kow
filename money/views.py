@@ -139,7 +139,11 @@ def home(request):
 
     for us in User.objects.filter(is_superuser=False):
         money_count = money_count + Post.objects.filter(user=us).last().money
-        tarif_count = tarif_count + Tarif.objects.filter(user=us).last().money_for_mons/30
+        tarif = Tarif.objects.filter(user=us).last()
+        if tarif != None:
+            tarif_count = tarif_count + Tarif.objects.filter(user=us).last().money_for_mons/30
+        else:
+            tarif_count = tarif_count + 0
 
     female_units = ((u'гривна', u'гривен', u'гривен'), 'f')
     money_count = num2text(money_count, female_units)
